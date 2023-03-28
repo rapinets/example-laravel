@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -21,23 +23,33 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->slug = $request->slug;
+        $post->save();
+        
+        //$validatedData = $request->validated();
+
+        //Post::create($validatedData);
+
+        return redirect()->route('posts.show');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        return view('blog.posts.show', compact('post'));
     }
 
     /**

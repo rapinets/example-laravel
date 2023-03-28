@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->text('content');
-            $table->boolean('active')->default(true);
+            $table->string('slug')->unique();
         });
     }
 

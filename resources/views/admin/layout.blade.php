@@ -12,13 +12,13 @@
 </head>
 <body>
     <div class="d-flex flex-column justify-content-between min-vh-100">
-        @include('blog.includes.header')
+        @include('admin.includes.header')
         <main class="flex-grow-1 mt-4">
             <div class="container">
                 @yield('content')
             </div>
         </main>
-        @include('blog.includes.footer')
+        @include('admin.includes.footer')
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.min.js"></script>
