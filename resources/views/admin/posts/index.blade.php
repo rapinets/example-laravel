@@ -1,4 +1,4 @@
-@extends('blog.layout')
+@extends('layout')
 
 @section('content')
 @php

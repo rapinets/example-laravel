@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,22 +23,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisterController::class, 'index'])->name('register');
-    Route::post('register', [RegisterController::class, 'store'])->name('register.store');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register-process', [AuthController::class, 'register'])->name('register.process');
 
-    Route::get('login', [LoginController::class, 'index'])->name('login');
-    Route::post('login', [LoginController::class, 'store'])->name('login.store');
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login-process', [AuthController::class, 'login'])->name('login.process');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 });
 
 Route::prefix('admin')->middleware('auth')->group(function () {
-
-    Route::get('posts', [PostController::class, 'index'])->name('admin.posts');
-    Route::get('posts/create', [PostController::class, 'create'])->name('admin.posts.create');
-    Route::post('posts', [PostController::class, 'store'])->name('admin.posts.store');
-    Route::get('posts/{post}', [PostController::class, 'show'])->name('admin.posts.show');
-    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('admin.posts.edit');
-    Route::put('posts/{post}', [PostController::class, 'update'])->name('admin.posts.update');
-    Route::delete('posts/{post}', [PostController::class, 'delete'])->name('admin.posts.delete');
-    Route::put('posts/{post}/like', [PostController::class, 'like'])->name('admin.posts.like');
+    Route::get('posts', [AdminController::class, 'index'])->name('admin.posts');
+    Route::get('posts/create', [AdminController::class, 'create'])->name('admin.posts.create');
+    Route::post('posts', [AdminController::class, 'store'])->name('admin.posts.store');
+    Route::get('posts/{post}', [AdminController::class, 'show'])->name('admin.posts.show');
+    Route::get('posts/{post}/edit', [AdminController::class, 'edit'])->name('admin.posts.edit');
+    Route::put('posts/{post}', [AdminController::class, 'update'])->name('admin.posts.update');
+    Route::delete('posts/{post}', [AdminController::class, 'delete'])->name('admin.posts.delete');
 });
 
