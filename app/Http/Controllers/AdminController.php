@@ -14,9 +14,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $post = 'Hello world';
+        $posts = Post::all();
 
-        return view('admin.posts.index', compact('post'));
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -30,6 +30,7 @@ class AdminController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = new Post();
+        $post->user_id = $request->user_id;
         $post->title = $request->title;
         $post->content = $request->content;
         $post->slug = $request->slug;
@@ -49,24 +50,28 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, Post $post)
     {
-        //
+      $post->update($request->validated());
+
+      return redirect(route('admin.posts'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect(route('admin.posts'));
     }
 }

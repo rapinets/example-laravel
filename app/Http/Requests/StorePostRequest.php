@@ -12,13 +12,14 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth('web')->check();
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
             'slug' => Str::slug($this->title, '-'),
+            "user_id" => auth("web")->id(),
         ]);
     }
 
@@ -30,6 +31,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "user_id" => ["required", "exists:users,id"],
             'title' => 'required | min:3',
             'slug' => 'required | min:3 | unique:posts' ,
             'content' => 'required',

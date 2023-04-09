@@ -24,7 +24,8 @@
             </div>
             
             <ul class="navbar-nav float-end">
-                @guest('web')
+                
+                @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">Register</a>
                     </li>
@@ -32,9 +33,9 @@
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                 @endguest
-                @auth('web')
+                @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Add new post</a>
+                        <a class="nav-link" href="{{ route('admin.posts.create') }}">Add new post</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>

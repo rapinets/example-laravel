@@ -1,8 +1,10 @@
 @extends('layout')
 
+@section('title', 'Login')
+
 @section('content')
 
-<h1 class="display-4 mb-5">Register</h1>
+<h1 class="display-4 mb-5">Login</h1>
 
 <form method="POST" action="{{ route('login.process') }}">
     @csrf
@@ -20,12 +22,15 @@
                 <div class="alert">the user does not exist with this email and password</div>
             @enderror
         </div>
+    </div>
+
+    <div class="row mb-4">
         <div class="col">
-            <a href="#" class="link-primary">Forgot your password?</a>
+            <a href="{{ route('forgot') }}" class="link-primary">Forgot your password?</a>
         </div>
     </div>
   
-    <button type="submit" class="btn btn-dark mt-4">Login</button>
+    <button type="submit" class="btn btn-dark">Login</button>
 </form>
 
 @endsection
