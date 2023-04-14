@@ -3,7 +3,7 @@
 @section('title', 'Posts')
 
 @section('content')
-    <div class="row">
+    <div class="row mb-4">
         @foreach($posts as $post)
         <div class="col-sm-6">
             <div class="card">
@@ -16,4 +16,5 @@
         </div>
         @endforeach
     </div>
+    {{ $posts->links() }}
 @endsection
